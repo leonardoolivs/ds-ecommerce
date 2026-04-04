@@ -20,6 +20,7 @@ public class User {
     private String phone;
     private LocalDate birthDate;
 
+    @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
 
     public User(Long id, String name, String email, String password, String phone, LocalDate birthDate) {

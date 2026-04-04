@@ -10,11 +10,16 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
-    public Instant moment;
-    public OrderStatus orderStatus;
+    private Long id;
+    private Instant moment;
+    private OrderStatus orderStatus;
 
-    public User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 
     public Order(Long id, Instant moment, OrderStatus orderStatus, User user) {
         this.id = id;
