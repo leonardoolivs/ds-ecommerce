@@ -13,6 +13,8 @@ public class Payment {
     private Long id;
     private Instant moment;
 
+    @OneToOne
+    @MapsId
     private Order order;
 
     public Payment(Long id, Instant moment, Order order) {
