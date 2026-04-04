@@ -3,7 +3,9 @@ package com.devsuperior.dsecommerce.models;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "TB_CATEGORY")
@@ -14,7 +16,8 @@ public class Category {
     private Long id;
     private String name;
 
-    private List<Product> products = new ArrayList<>();
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
 
     public Category(Long id, String name) {
         this.id = id;
@@ -39,7 +42,7 @@ public class Category {
         this.name = name;
     }
 
-    public List<Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
