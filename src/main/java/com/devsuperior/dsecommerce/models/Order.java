@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -67,5 +68,9 @@ public class Order {
 
     public Set<OrderProduct> getOrderProducts(){
         return orderProducts;
+    }
+
+    public List<Order> getOrder(){
+        return orderProducts.stream().map(op -> op.getOrder()).toList();
     }
 }

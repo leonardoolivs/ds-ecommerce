@@ -23,7 +23,7 @@ public class OrderProduct {
 
     public OrderProduct(){}
 
-    public Order order(){
+    public Order getOrder(){
         return id.getOrder();
     }
 
@@ -31,7 +31,7 @@ public class OrderProduct {
         id.setOrder(order);
     }
 
-    public Product product(){
+    public Product getProduct(){
         return id.getProduct();
     }
 

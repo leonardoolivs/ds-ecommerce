@@ -89,4 +89,8 @@ public class Product {
     public Set<OrderProduct> getOrderProducts(){
         return orderProducts;
     }
+
+    public List<Product> getProducts(){
+        return orderProducts.stream().map(op -> op.getProduct()).toList();
+    }
 }
