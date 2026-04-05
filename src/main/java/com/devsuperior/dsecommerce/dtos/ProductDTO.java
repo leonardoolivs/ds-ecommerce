@@ -21,7 +21,6 @@ public class ProductDTO {
 
     public Product toEntity() {
         Product entity = new Product();
-        entity.setId(this.id);
         entity.setName(this.name);
         entity.setDescription(this.description);
         entity.setPrice(this.price);
