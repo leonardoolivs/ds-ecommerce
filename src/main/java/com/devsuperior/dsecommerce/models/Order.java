@@ -14,8 +14,9 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant moment;
-    private OrderStatus orderStatus;
+    private OrderStatus status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -27,10 +28,10 @@ public class Order {
     @OneToMany(mappedBy = "id.order")
     private Set<OrderProduct> orderProducts = new HashSet<>();
 
-    public Order(Long id, Instant moment, OrderStatus orderStatus, User user) {
+    public Order(Long id, Instant moment, OrderStatus status, User user) {
         this.id = id;
         this.moment = moment;
-        this.orderStatus = orderStatus;
+        this.status = status;
         this.user = user;
     }
 
@@ -50,12 +51,12 @@ public class Order {
         this.moment = moment;
     }
 
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
+    public OrderStatus getStatus() {
+        return status;
     }
 
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     public User getUser() {
