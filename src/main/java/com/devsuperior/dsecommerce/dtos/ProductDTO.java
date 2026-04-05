@@ -28,6 +28,13 @@ public class ProductDTO {
         return entity;
     }
 
+    public void copyToEntity(Product entity) {
+        entity.setName(this.name);
+        entity.setDescription(this.description);
+        entity.setPrice(this.price);
+        entity.setImgUrl(this.imgUrl);
+    }
+
     public ProductDTO(){}
 
     public Long getId() {

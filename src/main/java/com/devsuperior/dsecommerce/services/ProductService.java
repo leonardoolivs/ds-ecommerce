@@ -45,4 +45,14 @@ public class ProductService {
         return new ProductDTO(product);
     }
 
+    @Transactional
+    public ProductDTO update(Long id, ProductDTO productDTO){
+        Product product = productRepository.getReferenceById(id);
+        productDTO.copyToEntity(product);
+
+        productRepository.save(product);
+
+        return new ProductDTO(product);
+    }
+
 }
