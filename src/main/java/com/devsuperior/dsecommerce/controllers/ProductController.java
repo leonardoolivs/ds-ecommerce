@@ -3,6 +3,7 @@ package com.devsuperior.dsecommerce.controllers;
 import com.devsuperior.dsecommerce.dtos.ProductDTO;
 import com.devsuperior.dsecommerce.models.Product;
 import com.devsuperior.dsecommerce.services.ProductService;
+import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> save(@RequestBody ProductDTO productDTO){
+    public ResponseEntity<ProductDTO> save(@Valid @RequestBody ProductDTO productDTO){
         productDTO = productService.insert(productDTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -49,7 +50,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable("id") Long id, @RequestBody ProductDTO productDTO){
+    public ResponseEntity<ProductDTO> update(@PathVariable("id") Long id, @Valid @RequestBody ProductDTO productDTO){
         productDTO = productService.update(id, productDTO);
 
         return ResponseEntity.ok(productDTO);

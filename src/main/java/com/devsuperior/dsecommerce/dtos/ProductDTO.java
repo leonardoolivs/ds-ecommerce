@@ -2,12 +2,23 @@ package com.devsuperior.dsecommerce.dtos;
 
 import com.devsuperior.dsecommerce.models.Product;
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 public class ProductDTO {
 
     private Long id;
+
+    @NotBlank
+    @Size(min = 3, max = 80)
     private String name;
+
+    @NotBlank
+    @Size(min = 10)
     private String description;
+
+    @Positive
     private Double price;
     private String imgUrl;
 

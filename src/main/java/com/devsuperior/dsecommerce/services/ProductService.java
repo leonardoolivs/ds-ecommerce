@@ -59,6 +59,7 @@ public class ProductService {
 
     @Transactional
     public void delete(Long id) {
+
         if (!productRepository.existsById(id)) {
             throw new ResourceNotFoundException("ID " + id + " not found");
         }
