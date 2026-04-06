@@ -1,6 +1,7 @@
 package com.devsuperior.dsecommerce.services;
 
 import com.devsuperior.dsecommerce.dtos.ProductDTO;
+import com.devsuperior.dsecommerce.exceptions.ResourceNotFoundException;
 import com.devsuperior.dsecommerce.models.Product;
 import com.devsuperior.dsecommerce.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +18,20 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository){
+    public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
     @Transactional(readOnly = true)
-    public ProductDTO findById(Long id){
-        Optional<Product> product = productRepository.findById(id);
+    public ProductDTO findById(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("ID " + id + " not found"));
 
-        return new ProductDTO(product.get());
+        return new ProductDTO(product);
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(Pageable pageable){
+    public Page<ProductDTO> findAll(Pageable pageable) {
 
         Page<Product> listProduct = productRepository.findAll(pageable);
 
@@ -37,7 +39,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO insert(ProductDTO productDTO){
+    public ProductDTO insert(ProductDTO productDTO) {
         Product product = productDTO.toEntity();
 
         productRepository.save(product);
@@ -46,7 +48,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO update(Long id, ProductDTO productDTO){
+    public ProductDTO update(Long id, ProductDTO productDTO) {
         Product product = productRepository.getReferenceById(id);
         productDTO.copyToEntity(product);
 
@@ -56,7 +58,7 @@ public class ProductService {
     }
 
     @Transactional
-    public void delete(Long id){
+    public void delete(Long id) {
         productRepository.deleteById(id);
     }
 
