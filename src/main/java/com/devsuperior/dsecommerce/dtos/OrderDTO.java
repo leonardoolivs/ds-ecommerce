@@ -17,14 +17,6 @@ public class OrderDTO {
     private PaymentDTO payment;
     private Set<OrderProductDTO> orderProducts = new HashSet<>();
 
-    public OrderDTO(Long id, Instant moment, OrderStatus status, ClientDTO user, PaymentDTO payment) {
-        this.id = id;
-        this.moment = moment;
-        this.status = status;
-        this.user = user;
-        this.payment = payment;
-    }
-
     public OrderDTO(Order entity){
         id = entity.getId();
         moment = entity.getMoment();
