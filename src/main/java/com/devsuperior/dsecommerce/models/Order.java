@@ -35,6 +35,8 @@ public class Order {
         this.user = user;
     }
 
+    public Order(){}
+
     public Long getId() {
         return id;
     }
@@ -65,6 +67,14 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public Set<OrderProduct> getOrderProducts(){
