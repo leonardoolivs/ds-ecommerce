@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query(nativeQuery = true, value = "SELECT to user.email AS username, tb user password, tb role.id AS roleld, tb role authority " +
-            "FROM tb user " +
-            "INNER JOIN to user role ON tb_user.id = tb user role user id " +
-            "INNER JOIN to role ON tb_role.id = tb user role.role id " +
-            "WHERE to user.email = :username")
+    @Query(nativeQuery = true, value = "SELECT tb_user.email AS username, tb_user.password, tb_role.id AS roleld, tb_role.authority " +
+            "FROM tb_user " +
+            "INNER JOIN tb_user_role ON tb_user.id = tb_user_role.user_id " +
+            "INNER JOIN tb_role ON tb_role.id = tb_user_role.role_id " +
+            "WHERE tb_user.email = :username")
     List<UserDTO> searchUserAndRolesByEmail(String username);
 }

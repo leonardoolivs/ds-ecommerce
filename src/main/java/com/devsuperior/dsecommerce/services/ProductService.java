@@ -1,6 +1,7 @@
 package com.devsuperior.dsecommerce.services;
 
 import com.devsuperior.dsecommerce.dtos.ProductDTO;
+import com.devsuperior.dsecommerce.dtos.ProductListDTO;
 import com.devsuperior.dsecommerce.exceptions.ResourceNotFoundException;
 import com.devsuperior.dsecommerce.models.Product;
 import com.devsuperior.dsecommerce.repositories.ProductRepository;
@@ -31,11 +32,11 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(Pageable pageable) {
+    public Page<ProductListDTO> findAll(Pageable pageable) {
 
         Page<Product> listProduct = productRepository.findAll(pageable);
 
-        return listProduct.map(x -> new ProductDTO(x));
+        return listProduct.map(x -> new ProductListDTO(x));
     }
 
     @Transactional

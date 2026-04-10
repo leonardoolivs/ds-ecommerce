@@ -1,6 +1,7 @@
 package com.devsuperior.dsecommerce.controllers;
 
 import com.devsuperior.dsecommerce.dtos.ProductDTO;
+import com.devsuperior.dsecommerce.dtos.ProductListDTO;
 import com.devsuperior.dsecommerce.models.Product;
 import com.devsuperior.dsecommerce.services.ProductService;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -33,13 +35,14 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable){
-        Page<ProductDTO> listProductDTO = productService.findAll(pageable);
+    public ResponseEntity<Page<ProductListDTO>> findAll(Pageable pageable){
+        Page<ProductListDTO> listProductDTO = productService.findAll(pageable);
 
         return ResponseEntity.ok(listProductDTO);
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ProductDTO> save(@Valid @RequestBody ProductDTO productDTO){
         productDTO = productService.insert(productDTO);
 
@@ -50,6 +53,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ProductDTO> update(@PathVariable("id") Long id, @Valid @RequestBody ProductDTO productDTO){
         productDTO = productService.update(id, productDTO);
 
@@ -57,6 +61,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id){
         productService.delete(id);
 
