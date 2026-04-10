@@ -9,6 +9,7 @@ public class OrderProductDTO {
     private String name;
     private Double price;
     private Integer quantity;
+    private String imgUrl;
 
     public OrderProductDTO() {
     }
@@ -18,6 +19,7 @@ public class OrderProductDTO {
         name = orderProduct.getProduct().getName();
         price = orderProduct.getPrice();
         quantity = orderProduct.getQuantity();
+        imgUrl = orderProduct.getProduct().getImgUrl();
     }
 
     public Long getProductId() {
@@ -34,6 +36,10 @@ public class OrderProductDTO {
 
     public Integer getQuantity() {
         return quantity;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
     }
 
     public Double getSubTotal() {
