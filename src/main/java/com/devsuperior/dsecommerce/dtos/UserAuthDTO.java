@@ -1,13 +1,13 @@
 package com.devsuperior.dsecommerce.dtos;
 
-public class UserDTO {
+public class UserAuthDTO {
 
     private String username;
     private String password;
     private Long roleId;
     private String authority;
 
-    public UserDTO(String username, String password, Long roleId, String authority) {
+    public UserAuthDTO(String username, String password, Long roleId, String authority) {
         this.username = username;
         this.password = password;
         this.roleId = roleId;

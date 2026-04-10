@@ -7,11 +7,6 @@ public class ClientDTO {
     private Long id;
     private String name;
 
-    public ClientDTO(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     public ClientDTO(User client){
         id = client.getId();
         name = client.getName();
