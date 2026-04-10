@@ -1,14 +1,19 @@
 package com.devsuperior.dsecommerce.services;
 
+import com.devsuperior.dsecommerce.dtos.UserAuthDTO;
 import com.devsuperior.dsecommerce.dtos.UserDTO;
 import com.devsuperior.dsecommerce.models.Role;
 import com.devsuperior.dsecommerce.models.User;
 import com.devsuperior.dsecommerce.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,7 +25,7 @@ public class UserService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<UserDTO> result = userRepository.searchUserAndRolesByEmail(username);
+        List<UserAuthDTO> result = userRepository.searchUserAndRolesByEmail(username);
 
         if(result.isEmpty()){
             throw new UsernameNotFoundException("User not found");
@@ -29,10 +34,30 @@ public class UserService implements UserDetailsService{
         User user = new User();
         user.setEmail(username);
         user.setPassword(result.get(0).getPassword());
-        for(UserDTO userDTO : result){
-            user.addRole(new Role(userDTO.getRoleId(), userDTO.getAuthority()));
+        for(UserAuthDTO userAuthDTO : result){
+            user.addRole(new Role(userAuthDTO.getRoleId(), userAuthDTO.getAuthority()));
         }
 
         return user;
+    }
+
+    protected User authenticated(){
+        try {
+            //Vai pegar um usuário autenticado
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
+            String username = jwtPrincipal.getClaim("username");
+            return userRepository.findByEmail(username).get();
+        }
+        catch (Exception e){
+            throw new UsernameNotFoundException("Email not found");
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public UserDTO getMe(){
+        User user = authenticated();
+
+        return new UserDTO(user);
     }
 }
