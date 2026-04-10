@@ -41,7 +41,7 @@ public class ProductService {
 
     @Transactional
     public ProductDTO insert(ProductDTO productDTO) {
-        Product product = productDTO.toEntity();
+        Product product = productDTO.toDtoEntity();
 
         productRepository.save(product);
 
@@ -51,7 +51,7 @@ public class ProductService {
     @Transactional
     public ProductDTO update(Long id, ProductDTO productDTO) {
         Product product = productRepository.getReferenceById(id);
-        productDTO.copyToEntity(product);
+        productDTO.copyDtoToEntity(product);
 
         productRepository.save(product);
 
