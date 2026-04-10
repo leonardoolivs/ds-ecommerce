@@ -28,14 +28,18 @@ public class Order {
     @OneToMany(mappedBy = "id.order")
     private Set<OrderProduct> orderProducts = new HashSet<>();
 
-    public Order(Long id, Instant moment, OrderStatus status, User user) {
+    public Order(Long id, Instant moment, OrderStatus status, User user, Payment payment) {
         this.id = id;
-        this.moment = moment;
-        this.status = status;
+        this.moment = Instant.now();
+        this.status = OrderStatus.WAITING_PAYMENT;
         this.user = user;
+        this.payment = payment;
     }
 
-    public Order(){}
+    public Order(){
+        this.moment = Instant.now();
+        this.status = OrderStatus.WAITING_PAYMENT;
+    }
 
     public Long getId() {
         return id;
